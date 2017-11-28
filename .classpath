@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="swing2swt.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/alchemy"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Backend_Image_Processing"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/conversation"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/discovery"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/document-conversion"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/java-sdk"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/language-translator"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/natural-language-classifier"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/natural-language-understanding"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.swt"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/parent"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/personality-insights"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/quickstart"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/retrieve-and-rank"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/speech-to-text"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/text-to-speech"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/tone-analyzer"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/tradeoff-analytics"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/visual-recognition"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

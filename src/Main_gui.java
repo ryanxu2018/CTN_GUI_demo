@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Tree;
@@ -55,6 +56,8 @@ public class Main_gui {
   private String imagePath;
   private String imageName;
   private VisualRecognition service;
+  private String defaultPath = "/Users/peijiexu/Downloads/savedImg/";
+  private String savePath;
 	
 	
   Display d;
@@ -84,11 +87,13 @@ public class Main_gui {
     Label pic_label = new Label(s, SWT.NONE);
     Label watson_label = new Label(s, SWT.NONE);
     Tree tree = new Tree(s, SWT.BORDER | SWT.CHECK | SWT.FULL_SELECTION);
-    Label imageField = new Label(s, SWT.BORDER);
+    Label imageField = new Label(s, SWT.BORDER | SWT.SCROLL_LINE);
     Text watsonOutput = new Text(s, SWT.BORDER|SWT.MULTI);
     Text txtOutput = new Text(s, SWT.BORDER);
     Button btnAnalyze = new Button(s, SWT.NONE);
     Button btnReset = new Button(s, SWT.NONE);
+    
+
     
     GridData gd_tl = new GridData();
     GridData gd_pl = new GridData();
@@ -156,42 +161,13 @@ public class Main_gui {
     watson_label.setText("Watson Analysis");
     
     //BELOW ALTERS IMAGES AND MAKES THEM INVALID.  FIX
-    /*imageField.addControlListener(new ControlAdapter() {
-    	@Override
-    	public void controlResized(ControlEvent e) {
-    		
-    		  try 
-    	        {
-    			  	String selected = getPath();
-    	            Image image = SWTResourceManager.getImage(selected);
-    	            ImageData imgData = image.getImageData();
-    	            imgData = imgData.scaledTo(imageField.getBounds().width, imageField.getBounds().height);
-    	            ImageLoader imgLoader = new ImageLoader();
-    	            imgLoader.data = new ImageData[] {imgData};
-    	            imgLoader.save(selected, SWT.IMAGE_COPY);
-    	            imageField.setBounds(imageField.getBounds().x,imageField.getBounds().y,imageField.getBounds().width,
-    	            						imageField.getBounds().height);
-    	            imageField.setImage(SWTResourceManager.getImage(selected));
-    	            
-    	           	}
-    	        catch(Exception e1) 
-    	        {
-    	        	 System.out.println(e1);
-    	        }
-    	        
-    		
-    		System.out.println(e);
-    	}
-    });*/
-
-    
-
-
-btnAnalyze.addSelectionListener(new SelectionAdapter() {
+    	
+   btnAnalyze.addSelectionListener(new SelectionAdapter() {
 	@Override
 	public void widgetSelected(SelectionEvent e) {
 		try {
 			InputStream imagesStream = new FileInputStream(imagePath);
+			System.out.println(imagePath);
 			ClassifyOptions classifyOptions = new ClassifyOptions.Builder()
 					  .imagesFile(imagesStream)
 					  .imagesFilename(imageName)
@@ -212,8 +188,7 @@ btnAnalyze.addSelectionListener(new SelectionAdapter() {
 	}
 });
 
-	
-    
+
     
 
     btnReset.addSelectionListener(new SelectionAdapter() {
@@ -224,6 +199,7 @@ btnAnalyze.addSelectionListener(new SelectionAdapter() {
     		imageField.setImage(null);
     		imagePath = null;
     		imageName = null;
+    		savePath = null;
     	}
     });
 
@@ -263,19 +239,30 @@ btnAnalyze.addSelectionListener(new SelectionAdapter() {
         System.out.println(selected);
         try 
         {
-        	pathSplit = selected.split("\\\\");
+        	// using "/" to split string in mac
+        	
+        	pathSplit = selected.split("/");
         	imageName = pathSplit[pathSplit.length-1];
+        	savePath = defaultPath + imageName;
+        	
+        	     Image image = SWTResourceManager.getImage(selected);
+             ImageData imgData = image.getImageData();
+             imgData = imgData.scaledTo(imageField.getBounds().width, imageField.getBounds().height);
+             ImageLoader imgLoader = new ImageLoader();
+             imgLoader.data = new ImageData[] {imgData};
+             imgLoader.save(savePath, SWT.IMAGE_COPY);
+             imageField.setBounds(imageField.getBounds().x,imageField.getBounds().y,imageField.getBounds().width,
+             						imageField.getBounds().height);
+             imageField.setImage(SWTResourceManager.getImage(savePath));
+        	
         	imagePath = selected;
-        	//BELOW SCREWS WITH IMAGES AND MAKES THEM INVALID. FIX
-            /*Image image = SWTResourceManager.getImage(selected);
-            ImageData imgData = image.getImageData();
-            imgData = imgData.scaledTo(imageField.getBounds().width, imageField.getBounds().height);
-            ImageLoader imgLoader = new ImageLoader();
-            imgLoader.data = new ImageData[] {imgData};
-            imgLoader.save(selected, SWT.IMAGE_COPY);
-            imageField.setBounds(imageField.getBounds().x,imageField.getBounds().y,imageField.getBounds().width,
-            						imageField.getBounds().height);*/
-            imageField.setImage(SWTResourceManager.getImage(selected));
+        	System.out.println(imageName);
+        	System.out.println(savePath);
+        	System.out.println(imagePath);
+
+           // imageField.setImage(SWTResourceManager.getImage(selected));
+            
+            
             
            	}
         catch(Exception e) 
